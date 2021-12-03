@@ -1,10 +1,13 @@
 import threading
 from flask import Flask
+from classes.Building import Building
 from flask_restful import Api, Resource
 from classes.Elevator_classes import FastElevator, StandartElevator, CargoElevator
 
 app = Flask(__name__)
 api = Api(app)
+
+building = Building(20) # Creating a building with random elevators in it
 
 myElevators = {
     1 : FastElevator(1),

@@ -11,7 +11,6 @@ class Building:
         }
         for id in range(random.randint(1,3)):
             randomElevator = random.randint(1,3)
-            print(f"Id: {id+4}, Random: {randomElevator}")
             if randomElevator == 1:
                 self.elevators["1"].append(FastElevator(id+4))
             if randomElevator == 2:
