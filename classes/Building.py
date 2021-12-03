@@ -1,6 +1,6 @@
 import random
 from collections import deque
-from Elevator_classes import FastElevator, StandartElevator, CargoElevator
+from .Elevator_classes import FastElevator, StandartElevator, CargoElevator
 
 class Building:
     def __init__(self, n):

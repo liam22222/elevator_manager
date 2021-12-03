@@ -1,37 +1,25 @@
-import threading
 from flask import Flask
 from classes.Building import Building
 from flask_restful import Api, Resource
-from classes.Elevator_classes import FastElevator, StandartElevator, CargoElevator
+from classes.side_functions import type_availability, find_elevator
 
 app = Flask(__name__)
 api = Api(app)
 
-building = Building(20) # Creating a building with random elevators in it
-
-myElevators = {
-    1 : FastElevator(1),
-    2 : StandartElevator(2),
-    3 : CargoElevator(3)
-}
-
-def reserve_elevator(id):
-    myElevators[id].reserve()
+building = Building(20)
 
 class getElevators(Resource):
-    def get(self, id):
-        return {"Data": myElevators[id].print()}
-    
-    def post(self, id):
-        if myElevators[id].tta == 0:
-            thread = threading.Thread(target = reserve_elevator, args=(id,))
-            thread.start()
-            return {"data" : f"Elevator {id} is on your way!\nThier detailes are {myElevators[id].print()}"}
-        else:
-            return {"data" : f"Elevator {id} is currently busy and could not be reserved.\nPlease wait for {myElevators[id].tta} secondes."}
+    def get(self, num_persons, cargo_weight, requested_floor):
+        return {"data" : find_elevator(building,
+        type_availability(
+            building=building,
+            req_floor=requested_floor,
+            num_persons=num_persons,
+            cargo=cargo_weight)
+        )}
 
 
-api.add_resource(getElevators, "/getElevators/<int:id>")
+api.add_resource(getElevators, "/getElevators/<int:num_persons>/<int:cargo_weight>/<int:requested_floor>")
 
 if __name__ == "__main__":
     app.run(debug=True)

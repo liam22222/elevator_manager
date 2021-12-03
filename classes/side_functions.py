@@ -3,7 +3,7 @@
 # 3 - Cargo
 import threading
 import time
-from Building import Building
+from .Building import Building
 building = Building(20)
 def reserve_first_elevator(building, elevator_type):
     building.elevators[elevator_type][0].reserve()
@@ -54,11 +54,3 @@ def find_elevator(building, good_types):
         return "\nThere is no such elevator for this request!"
     else:
         return f"\nThere are no availeble elevators for you right now.\nPlease wait for {minTTA} secondes." 
-
-building = Building(20)
-print(find_elevator(building,type_availability(building,21,1,1)))
-time.sleep(1)
-print(find_elevator(building,type_availability(building,11,1,1)))
-time.sleep(1)
-print(find_elevator(building,type_availability(building,11,1,1)))
-# time.sleep(1)
