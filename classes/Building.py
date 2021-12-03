@@ -21,6 +21,6 @@ class Building:
     def print(self):
         print(f"This building has {self.n} floors\nThe elevators are: ")
         for tye in self.elevators:
-            print(self.elevators[tye])
+            print(len(self.elevators[tye]))
             
         

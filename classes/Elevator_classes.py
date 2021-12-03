@@ -17,7 +17,7 @@ class Elevator():
 
     def reserve(self):
         """Reserve function make a holding for the elevator which mean it cant be in use in Those 10 secondes.\nIt handles like a mutex in Operation systems"""
-        print(f"Elevator {self.id} Has been reserved...")
+        #print(f"Elevator {self.id} Has been reserved...")
         self.tta = 10
         while(self.tta > 0):
             self.tta -= 1

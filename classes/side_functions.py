@@ -2,6 +2,7 @@
 # 2 - Standart
 # 3 - Cargo
 import threading
+import time
 from Building import Building
 building = Building(20)
 def reserve_first_elevator(building, elevator_type):
@@ -24,10 +25,14 @@ def type_availability(building, req_floor, num_persons, cargo):
 
 def find_elevator(building, good_types):
     """Reciving - Building, Types of elevators that can answer a specific request\n Return - Message of the elevator on his way."""
-    min = 10
+    min = 11 # Min seconeds to wait
+    minid = -1
+
     for elevator_type in good_types:
-        minTTA = building.elevators[elevator_type]
-        if building.elevators[elevator_type][0].tta == 0:
+        #print(f"elevator type: {elevator_type}")
+        minTTA = building.elevators[elevator_type][0].tta
+
+        if minTTA == 0:
             #This thread create a reserve
             thread = threading.Thread(target=reserve_first_elevator,args=(building,elevator_type,))
             thread.start()
@@ -35,12 +40,25 @@ def find_elevator(building, good_types):
             #Getting the current information about the first elevator before the cycle
             id = building.elevators[elevator_type][0].id
             information = building.elevators[elevator_type][0].print()
-
-            #This command is poping the first item and appending it in the end
-            building.elevators[elevator_type].append(building.elevators[elevator_type].popleft)
-            return f"Elevator: {id} is reserved for you!\n{information}"
-
+            
+            #This commands is poping the first item and appending it in the end
+            building.elevators[elevator_type].append(building.elevators[elevator_type].popleft())
+            
+            return f"\nElevator: {id} is reserved for you!\n{information}"
+        else:
+            if minTTA < min:
+                min = minTTA
+                minid = building.elevators[elevator_type][0].id
+        
+    if minid == -1:
+        return "\nThere is no such elevator for this request!"
+    else:
+        return f"\nThere are no availeble elevators for you right now.\nPlease wait for {minTTA} secondes." 
 
 building = Building(20)
-print(building.elevators["1"][0].tta)
-print(type_availability(building,7,11,0))
+print(find_elevator(building,type_availability(building,21,1,1)))
+time.sleep(1)
+print(find_elevator(building,type_availability(building,11,1,1)))
+time.sleep(1)
+print(find_elevator(building,type_availability(building,11,1,1)))
+# time.sleep(1)
