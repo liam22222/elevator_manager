@@ -1,9 +1,6 @@
-# 1 - Fast
-# 2 - Standart
-# 3 - Cargo
 import threading
-from Building import Building
-from Elevator_classes import Elevator
+from .Building import Building
+from .Elevator_classes import Elevator
 building = Building(20)
 def reserve_first_elevator(building, elevator_type):
     building.elevators[elevator_type][0].reserve()
