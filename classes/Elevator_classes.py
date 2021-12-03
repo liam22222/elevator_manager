@@ -22,17 +22,40 @@ class Elevator():
         while(self.tta > 0):
             self.tta -= 1
             time.sleep(1)
+    def check(self, num_persons, cargo, req_floor):
+        good_types = []
+
+        fast_elevator = FastElevator(1)
+        standart_elevator = StandartElevator(1)
+        cargo_elevator = CargoElevator(1)
+
+        if fast_elevator.sub_check(self,num_persons,cargo,req_floor):
+            good_types.append(1)
+
+        if standart_elevator.sub_check(self,num_persons,cargo):
+            good_types.append(2)
+
+        if cargo_elevator.sub_check(self,num_persons,cargo,req_floor):
+            good_types.append(3)
+
+        return good_types
+        
 
 class FastElevator(Elevator):
     def __init__(self, id):
         """Initalize an elevator with fast elevator characteristics"""
         super().__init__(id, 5, 0)
+        self.min_floor = 10
     
     def print(self):
         return "Fast Elevator\n" + super().print()
 
     def reserve(self):
         return super().reserve()
+    
+    def sub_check(self, num_persons, cargo, req_floor):
+        if self.max_cargo >= cargo and self.max_persons >= num_persons and req_floor >= self.min_floor:
+            return True
 
 class StandartElevator(Elevator):
     def __init__(self, id):
@@ -44,6 +67,10 @@ class StandartElevator(Elevator):
 
     def reserve(self):
         return super().reserve()
+    
+    def sub_check(self, num_persons, cargo, req_floor):
+        if self.max_cargo >= cargo and self.max_persons >= num_persons:
+            return True
 
 class CargoElevator(Elevator):
     def __init__(self, id):
@@ -55,3 +82,7 @@ class CargoElevator(Elevator):
 
     def reserve(self):
         return super().reserve()
+    
+    def sub_check(self, num_persons, cargo, req_floor):
+        if self.max_cargo >= cargo and self.max_persons >= num_persons and req_floor % 2 == 1:
+            return True

@@ -2,8 +2,8 @@
 # 2 - Standart
 # 3 - Cargo
 import threading
-import time
-from .Building import Building
+from Building import Building
+from Elevator_classes import Elevator
 building = Building(20)
 def reserve_first_elevator(building, elevator_type):
     building.elevators[elevator_type][0].reserve()
@@ -15,12 +15,11 @@ def type_availability(building, req_floor, num_persons, cargo):
     if num_persons == 0 and cargo == 0:
         return [] # We wont waste time for no cargo and no persons
     good_types = [] # Types that can handle the request
-    if req_floor >= 10 and num_persons <= 5 and cargo == 0:
-        good_types.append(1)
-    if num_persons <= 10 and cargo <= 50:
-        good_types.append(2)
-    if req_floor%2 == 1 and num_persons == 0 and cargo <= 750:
-        good_types.append(3)
+
+    for key in building.elevators.keys():
+        if building.elevators[key][0].sub_check(num_persons,cargo,req_floor) == True:
+            good_types.append(key)
+
     return good_types
 
 def find_elevator(building, good_types):
@@ -54,3 +53,6 @@ def find_elevator(building, good_types):
         return "\nThere is no such elevator for this request!"
     else:
         return f"\nThere are no availeble elevators for you right now.\nPlease wait for {minTTA} secondes." 
+
+building = Building(20)
+print(type_availability(building, 12, 0, 70))
