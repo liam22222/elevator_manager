@@ -13,7 +13,7 @@ class Elevator():
 
     def print(self):
         """Print information about our elevator"""
-        return (f"Elevator id: {self.id}\nIn use for more {self.tta} seconds\nMax persons: {self.max_persons}\nMax cargo: {self.max_cargo}")
+        return (f"Elevator id: {self.id}\nMax persons: {self.max_persons}\nMax cargo: {self.max_cargo}")
 
     def reserve(self):
         """Reserve function make a holding for the elevator which mean it cant be in use in Those 10 secondes.\nIt handles like a mutex in Operation systems"""
