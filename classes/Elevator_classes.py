@@ -22,24 +22,6 @@ class Elevator():
         while(self.tta > 0):
             self.tta -= 1
             time.sleep(1)
-    def check(self, num_persons, cargo, req_floor):
-        good_types = []
-
-        fast_elevator = FastElevator(1)
-        standart_elevator = StandartElevator(1)
-        cargo_elevator = CargoElevator(1)
-
-        if fast_elevator.sub_check(self,num_persons,cargo,req_floor):
-            good_types.append(1)
-
-        if standart_elevator.sub_check(self,num_persons,cargo):
-            good_types.append(2)
-
-        if cargo_elevator.sub_check(self,num_persons,cargo,req_floor):
-            good_types.append(3)
-
-        return good_types
-        
 
 class FastElevator(Elevator):
     def __init__(self, id):
