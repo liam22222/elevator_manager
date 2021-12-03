@@ -79,3 +79,32 @@ def type_availability(building, req_floor, num_persons, cargo):
     return good_types
 
 ```
+### [Find elevator](https://github.com/liam22222/elevator_manager/blob/main/classes/side_functions.py#L22)
+Now that we know who can handle our request, it is time to reserve an elevator for it right?
+Imagine we have a tenant lives in the eleven floor, and our system reserve him a standart elevator. What?
+This function gives priority to which elevator should I use using the elevator priority(fast, standart, cargo), and time to wait.
+So lets say that our function detact that it is better to send a fast elevator insted of a standart one. How is it know which one to send? If it want to check which elevator is the closes it need to check in each and every one of them what is thier TTA, it will take `O(N-number of elevators from the same type)`.
+This is why I used `dict{int : deque}`.
+When I figured out that a certin type is the best for a request, I told the first elevator from this type to handle it. Then, I set her TTA to be 10, and used `deque.leftpop()` to pop it and `deque.append()` to add it to the right.
+If the first elevator in some type TTA value is'nt 0, the all elevators from this type are in used and maybe I should use another type of elevators if possible for this request.
+I do understand it is hard to figure it out from the text, so, here is an example.
+
+Lets say I have this as configured elevators in my building: 
+```
+Fast type ->
+        Id: 1, TTA: 3
+Standart type ->
+        Id: 2, TTA: 0
+        Id: 3, TTA: 4
+```
+When requesting the following (13, 2, 0) (13 floor, two people, no cargo) Both standart and fast type of elevators can help. At first, the code tries to find a fast elevator but he sees that its TTA set to 3 so he set minimum value of waiting to be 3.
+Then, he found out that in the standart type there is an elevator with 0 TTA which mean its free to use. So the code reserve it, returning it to the user, and edit the data inside the Building object to be like so: 
+
+```
+Fast type ->
+        Id: 1, TTA: 2
+Standart type ->
+        Id: 3, TTA: 3
+        Id: 2, TTA: 10
+```
+As you see now, the number 3 elevator is ahead of number 2 elevator which make sense. 
