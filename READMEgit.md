@@ -57,9 +57,25 @@ The building takes for granted the fact that there is at least one elevator for 
 ```
 ## The functions that made it all
 **There are two functions that act as the brain of the server. We are going to explain each for now**
-### [Type availability (https://github.com/liam22222/elevator_manager/blob/main/classes/side_functions.py#L8)]
+### [Type availability](https://github.com/liam22222/elevator_manager/blob/main/classes/side_functions.py#L8)
 Lets say the user entered a request as such. I want to go to the eleven floor, with no Cargo and two other people. 
 Who can handle this request? and what about (2,0,0)? why should I handle this request?
 The Type abailability checks which sub-class of elevators are able to handle this request. He does it with `sub_check`
 which is a function written down in every sub-class and returns wether this class is able to help or no. 
 I used this command in order to keep the OOD of this project insted of developing a fixed solution.
+```
+def type_availability(building, req_floor, num_persons, cargo):
+    """Reciving - Building, Requested floor, Persons, Cargo\n Return - List of availible types."""
+    if req_floor > building.n:
+        return [] # You cant get out the building
+    if num_persons == 0 and cargo == 0:
+        return [] # We wont waste time for no cargo and no persons
+    good_types = [] # Types that can handle the request
+
+    for key in building.elevators.keys():
+        if building.elevators[key][0].sub_check(num_persons,cargo,req_floor) == True:
+            good_types.append(key)
+
+    return good_types
+
+```
