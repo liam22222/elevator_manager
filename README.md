@@ -108,3 +108,14 @@ Standart type ->
         Id: 2, TTA: 10
 ```
 As you see now, the number 3 elevator is ahead of number 2 elevator which make sense. 
+## Class diagram and sequence
+![image](https://user-images.githubusercontent.com/34837970/144663060-e783caa5-27a4-4678-a629-94150ef4dc99.png)
+![image](https://user-images.githubusercontent.com/34837970/144665113-a706469c-7a97-4bf4-bcf3-cde1c5aa0bcd.png)
+
+
+## Key concepts 
+### Threading
+In order to make sure a reserve of an elevator wont steal my processor attention I used threading. It is when you manage a child process to make a job for you and the main code keep on going. You can read more about the **mutex** logic behined it in [here](https://en.wikipedia.org/wiki/Lock_(computer_science))
+
+### Deque 
+Deque is a double ended queue which fit perfectly to the situation I need to develop. Using its `O(1)` popleft() and append() methods allowed me to quick serch a bunch of elevators insted of `O(n*m)` where m is the number of elevators from a specific type and n is the type. Now all I have to do, is search from the list of allowed elevators type which in worst case would be `O(n)`.
