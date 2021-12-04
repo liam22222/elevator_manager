@@ -17,8 +17,7 @@ def get(self, num_persons, cargo_weight, requested_floor):
 ```
 ## Classes in the code (OOP and OOD)
 ### Elevator and his sub-classes (FastElevator, StandartElevator, CargoElevator)
-`Elevator` is a class in the project that handles all there is to know about elevators id, maxium number of persons and 
-cargo in kilogram, and the most importand, Time till availability (TTA)
+`Elevator` is a class in the project that handles all there is to know about elevators id, maxium number of persons, weight of cargo and the most importand, Time till availability (TTA)
 
 This class has three sub-classes that are configured using the elevator properties, yet, each have a diffrent role in
 the project. You can read more about them in [the code](https://github.com/liam22222/elevator_manager/blob/main/classes/Elevator_classes.py), but here is an example
