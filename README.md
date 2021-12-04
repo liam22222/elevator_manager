@@ -108,8 +108,10 @@ Standart type ->
         Id: 2, TTA: 10
 ```
 As you see now, the number 3 elevator is ahead of number 2 elevator which make sense. 
-## Class diagram and sequence
+## Class diagram and sequence diagram
+### Class diagram
 ![image](https://user-images.githubusercontent.com/34837970/144663060-e783caa5-27a4-4678-a629-94150ef4dc99.png)
+### Sequence diagram
 ![image](https://user-images.githubusercontent.com/34837970/144665113-a706469c-7a97-4bf4-bcf3-cde1c5aa0bcd.png)
 
 
